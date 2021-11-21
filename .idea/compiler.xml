@@ -16,6 +16,7 @@
         <module name="reverse" />
         <module name="consumer" />
         <module name="entity" />
+        <module name="redis" />
       </profile>
     </annotationProcessing>
   </component>

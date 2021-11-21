@@ -1,0 +1,11 @@
+{
+  "groups": [
+    {
+      "name": "file-service",
+      "type": "org.fall.config.WebConfig",
+      "sourceType": "org.fall.config.WebConfig"
+    }
+  ],
+  "properties": [],
+  "hints": []
+}

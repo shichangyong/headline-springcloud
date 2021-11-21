@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.fall.mapper.ArticlePOMapper" >
+  <resultMap id="BaseResultMap" type="org.fall.entity.po.ArticlePO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="author_id" property="authorId" jdbcType="INTEGER" />
+    <result column="html_content" property="htmlContent" jdbcType="VARCHAR" />
+    <result column="cover_url" property="coverUrl" jdbcType="VARCHAR" />
+    <result column="picture_url" property="pictureUrl" jdbcType="VARCHAR" />
+    <result column="video_url" property="videoUrl" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="comment_number" property="commentNumber" jdbcType="INTEGER" />
+    <result column="fabulous_number" property="fabulousNumber" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, author_id, html_content, cover_url, picture_url, video_url, time, comment_number, 
+    fabulous_number, title
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.fall.entity.po.ArticlePOExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from article
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from article
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.fall.entity.po.ArticlePOExample" >
+    delete from article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.fall.entity.po.ArticlePO" >
+    insert into article (id, author_id, html_content, 
+      cover_url, picture_url, video_url, 
+      time, comment_number, fabulous_number, 
+      title)
+    values (#{id,jdbcType=INTEGER}, #{authorId,jdbcType=INTEGER}, #{htmlContent,jdbcType=VARCHAR}, 
+      #{coverUrl,jdbcType=VARCHAR}, #{pictureUrl,jdbcType=VARCHAR}, #{videoUrl,jdbcType=VARCHAR}, 
+      #{time,jdbcType=TIMESTAMP}, #{commentNumber,jdbcType=INTEGER}, #{fabulousNumber,jdbcType=INTEGER}, 
+      #{title,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.fall.entity.po.ArticlePO" >
+    insert into article
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="authorId != null" >
+        author_id,
+      </if>
+      <if test="htmlContent != null" >
+        html_content,
+      </if>
+      <if test="coverUrl != null" >
+        cover_url,
+      </if>
+      <if test="pictureUrl != null" >
+        picture_url,
+      </if>
+      <if test="videoUrl != null" >
+        video_url,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="commentNumber != null" >
+        comment_number,
+      </if>
+      <if test="fabulousNumber != null" >
+        fabulous_number,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="authorId != null" >
+        #{authorId,jdbcType=INTEGER},
+      </if>
+      <if test="htmlContent != null" >
+        #{htmlContent,jdbcType=VARCHAR},
+      </if>
+      <if test="coverUrl != null" >
+        #{coverUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureUrl != null" >
+        #{pictureUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="videoUrl != null" >
+        #{videoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentNumber != null" >
+        #{commentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="fabulousNumber != null" >
+        #{fabulousNumber,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.fall.entity.po.ArticlePOExample" resultType="java.lang.Integer" >
+    select count(*) from article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update article
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.authorId != null" >
+        author_id = #{record.authorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.htmlContent != null" >
+        html_content = #{record.htmlContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coverUrl != null" >
+        cover_url = #{record.coverUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pictureUrl != null" >
+        picture_url = #{record.pictureUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.videoUrl != null" >
+        video_url = #{record.videoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.time != null" >
+        time = #{record.time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.commentNumber != null" >
+        comment_number = #{record.commentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.fabulousNumber != null" >
+        fabulous_number = #{record.fabulousNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update article
+    set id = #{record.id,jdbcType=INTEGER},
+      author_id = #{record.authorId,jdbcType=INTEGER},
+      html_content = #{record.htmlContent,jdbcType=VARCHAR},
+      cover_url = #{record.coverUrl,jdbcType=VARCHAR},
+      picture_url = #{record.pictureUrl,jdbcType=VARCHAR},
+      video_url = #{record.videoUrl,jdbcType=VARCHAR},
+      time = #{record.time,jdbcType=TIMESTAMP},
+      comment_number = #{record.commentNumber,jdbcType=INTEGER},
+      fabulous_number = #{record.fabulousNumber,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.fall.entity.po.ArticlePO" >
+    update article
+    <set >
+      <if test="authorId != null" >
+        author_id = #{authorId,jdbcType=INTEGER},
+      </if>
+      <if test="htmlContent != null" >
+        html_content = #{htmlContent,jdbcType=VARCHAR},
+      </if>
+      <if test="coverUrl != null" >
+        cover_url = #{coverUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureUrl != null" >
+        picture_url = #{pictureUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="videoUrl != null" >
+        video_url = #{videoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentNumber != null" >
+        comment_number = #{commentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="fabulousNumber != null" >
+        fabulous_number = #{fabulousNumber,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.fall.entity.po.ArticlePO" >
+    update article
+    set author_id = #{authorId,jdbcType=INTEGER},
+      html_content = #{htmlContent,jdbcType=VARCHAR},
+      cover_url = #{coverUrl,jdbcType=VARCHAR},
+      picture_url = #{pictureUrl,jdbcType=VARCHAR},
+      video_url = #{videoUrl,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP},
+      comment_number = #{commentNumber,jdbcType=INTEGER},
+      fabulous_number = #{fabulousNumber,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getArticlePreview" resultMap="ArticlePreviewUser" parameterType="java.lang.Integer">
+    select id, author_id, cover_url, time, comment_number,fabulous_number, title from article
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <resultMap id="ArticlePreviewUser" type="org.fall.entity.dto.ArticlePreviewDTO">
+    <!--association关联属性 property属性名 javaType属性类型 column在多的一方的表中的列名-->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="author_id" property="authorId" jdbcType="INTEGER" />
+    <result column="cover_url" property="coverUrl" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="comment_number" property="commentNumber" jdbcType="INTEGER" />
+    <result column="fabulous_number" property="fabulousNumber" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <association property="userPO"  column="author_id" javaType="org.fall.entity.po.UserPO" select="getUserPO"/>
+  </resultMap>
+  <!--
+  这里传递过来的id，只有一个属性的时候，下面可以写任何值
+  association中column多参数配置：
+      column="{key=value,key=value}"
+      其实就是键值对的形式，key是传给下个sql的取值名称，value是片段一中sql查询的字段名。
+  -->
+  <select id="getUserPO" resultMap="UserPOBLOBs">
+    select id, phone_number, nickname, password, authentication, head_portrait from user where id = #{id};
+  </select>
+  <resultMap id="UserPO" type="org.fall.entity.po.UserPO">
+    <!--association关联属性 property属性名 javaType属性类型 column在多的一方的表中的列名-->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="authentication" property="authentication" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="UserPOBLOBs" type="org.fall.entity.po.UserPO" extends="BaseResultMap" >
+    <result column="head_portrait" property="headPortrait" jdbcType="LONGVARBINARY" />
+  </resultMap>
+
+  <update id="addCommentNumber" parameterType="java.lang.Integer">
+    update article set comment_number=comment_number+1 where id=#{id}
+  </update>
+
+  <select id="getListByTime" resultMap="BaseResultMap" parameterType="org.fall.entity.vo.PreviewByTimeVO">
+    select
+    <include refid="Base_Column_List" />
+    from article
+    <where>
+      <if test="type == 'newest'">
+        time &gt; #{time}
+      </if>
+      <if test="type == 'oldest'">
+        time &lt; #{time}
+      </if>
+    </where>  limit 10 ;
+  </select>
+
+  <!--查找符合关键字匹配的数据（没有关键字则默认查找全部数据）-->
+  <select id="selectArticleByKeyword" resultMap="ArticlePreviewUser">
+    select
+      *
+    from article
+    where
+      title like CONCAT("%",#{keyword},"%") or
+      html_content like CONCAT("%",#{keyword},"%")
+  </select>
+</mapper>

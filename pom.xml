@@ -18,6 +18,7 @@
         <module>api</module>
         <module>util</module>
         <module>reverse</module>
+        <module>redis</module>
     </modules>
 
     <!-- 在parent工程进行依赖管理 -->

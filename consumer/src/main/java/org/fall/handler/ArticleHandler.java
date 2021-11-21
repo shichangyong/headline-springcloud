@@ -2,9 +2,9 @@ package org.fall.handler;
 
 import com.github.pagehelper.PageInfo;
 import org.fall.api.MySQLRemoteService;
+import org.fall.api.RedisRemoteService;
 import org.fall.entity.dto.ArticlePreviewDTO;
 import org.fall.entity.dto.ArticleTextDTO;
-import org.fall.entity.dto.MicroHeadlinesDTO;
 import org.fall.entity.dto.RefreshLoadDTO;
 import org.fall.entity.po.ArticlePO;
 import org.fall.entity.vo.ArticleVO;
@@ -22,6 +22,9 @@ public class ArticleHandler {
 
     @Autowired
     MySQLRemoteService mySQLRemoteService;
+
+    @Autowired
+    RedisRemoteService redisRemoteService;
 
     @RequestMapping("/upload/article/text")
     public String saveArticleText(ArticleVO articleVO) {
@@ -44,8 +47,19 @@ public class ArticleHandler {
 
     @RequestMapping("/get/article/text")
     public ResultEntity<ArticleTextDTO> getArticleText(@RequestParam("id")int id){
-        ResultEntity<ArticleTextDTO> articleTextRemote = mySQLRemoteService.getArticleTextRemote(id);
-        return  articleTextRemote;
+        ResultEntity<ArticleTextDTO> redisArticleText = redisRemoteService.getArticleTextRemote(id);
+        if(redisArticleText.getMessage() == null){
+            return redisArticleText;
+        }else{
+            System.err.println(redisArticleText.getMessage());
+            ResultEntity<ArticleTextDTO> articleTextRemote = mySQLRemoteService.getArticleTextRemote(id);
+            String htmlContent = articleTextRemote.getData().getHtmlContent();
+            String title = articleTextRemote.getData().getTitle();
+            redisRemoteService.setArticleTextRemote(id, htmlContent, title);
+            return  articleTextRemote;
+        }
+
+
     }
 
     @RequestMapping("/get/article/list")
